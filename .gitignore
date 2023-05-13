@@ -13,3 +13,15 @@ pnpm-debug.log*
 
 # Dependencies
 node_modules
+
+# Tests
+coverage
+
+# Builds
+dist
+
+# Files served by the Vite development server
+public
+
+# Other Vite related files
+vite.config.ts.timestamp-*.mjs
