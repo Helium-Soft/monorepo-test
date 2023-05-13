@@ -1,0 +1,15 @@
+# Logs
+logs
+*.log
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+
+# IDE and code editor files
+.idea
+.vscode
+!.vscode/extensions.json
+
+# Dependencies
+node_modules
