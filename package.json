@@ -4,7 +4,11 @@
   "type": "module",
   "license": "GPL-3.0",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "FORCE_COLOR=1 turbo run dev",
+    "build": "FORCE_COLOR=1 turbo run build",
+    "test": "FORCE_COLOR=1 turbo run test",
+    "test:coverage": "FORCE_COLOR=1 turbo run test:coverage"
   },
   "packageManager": "pnpm@8.4.0",
   "devDependencies": {
@@ -21,6 +25,7 @@
     "micromatch": "^4.0.5",
     "prettier": "^2.8.8",
     "tslib": "^2.5.0",
+    "turbo": "^1.9.4",
     "typescript": "^5.0.4",
     "vite": "^4.3.5",
     "vitest": "^0.31.0"

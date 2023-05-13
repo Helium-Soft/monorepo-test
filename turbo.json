@@ -1,0 +1,22 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "dev": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "index.html"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.d.ts", "src/**/*.ts"],
+      "outputs": ["dist/*.js"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "test/**/*.ts"]
+    },
+    "test:coverage": {
+      "dependsOn": ["build"],
+      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "test/**/*.ts"]
+    }
+  }
+}
