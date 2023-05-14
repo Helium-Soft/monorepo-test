@@ -3,20 +3,35 @@
   "pipeline": {
     "dev": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "index.html"]
+      "inputs": [
+        "src/**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.svelte",
+        "index.html"
+      ]
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*.d.ts", "src/**/*.ts"],
+      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.svelte"],
       "outputs": ["dist/*.js"]
     },
     "test": {
       "dependsOn": ["build"],
-      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "test/**/*.ts"]
+      "inputs": [
+        "src/**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.svelte",
+        "test/**/*.ts"
+      ]
     },
     "test:coverage": {
       "dependsOn": ["build"],
-      "inputs": ["src/**/*.d.ts", "src/**/*.ts", "test/**/*.ts"]
+      "inputs": [
+        "src/**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.svelte",
+        "test/**/*.ts"
+      ]
     }
   }
 }
