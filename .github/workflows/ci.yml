@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run-builds-and-tests:
+  ci:
     name: Build and test packages
     runs-on: ubuntu-latest
     steps:
@@ -45,3 +45,8 @@ jobs:
 
       - name: Run tests with coverage report
         run: pnpm test:coverage
+
+      - name: Create release PR
+        uses: changesets/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

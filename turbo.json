@@ -32,6 +32,17 @@
         "src/**/*.svelte",
         "test/**/*.ts"
       ]
+    },
+    "release": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "src/**/*.d.ts",
+        "src/**/*.ts",
+        "src/**/*.svelte",
+        "test/**/*.ts",
+        "package.json"
+      ],
+      "outputs": ["dist/*.js"]
     }
   }
 }

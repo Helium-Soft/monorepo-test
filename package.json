@@ -8,7 +8,8 @@
     "dev": "FORCE_COLOR=1 turbo run dev",
     "build": "FORCE_COLOR=1 turbo run build",
     "test": "FORCE_COLOR=1 turbo run test",
-    "test:coverage": "FORCE_COLOR=1 turbo run test:coverage"
+    "test:coverage": "FORCE_COLOR=1 turbo run test:coverage",
+    "release": "FORCE_COLOR=1 turbo run release"
   },
   "packageManager": "pnpm@8.5.0",
   "devDependencies": {
