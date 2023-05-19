@@ -3,6 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./configs": {
+      "import": "./dist/configs/manifest.js",
+      "types": "./src/configs/manifest.ts"
+    },
+    "./plugins": {
+      "import": "./dist/plugins/manifest.js",
+      "types": "./src/plugins/manifest.ts"
+    }
+  },
   "scripts": {
     "build": "rm -rf ./dist/* && tsc --build ./tsconfig.json && prettier --write ./dist"
   },
