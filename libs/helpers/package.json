@@ -1,0 +1,20 @@
+{
+  "name": "@monorepo-test/helpers",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./url": {
+      "import": "./src/url/manifest.ts",
+      "types": "./src/url/manifest.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@monorepo-test/typescript": "workspace:*",
+    "@monorepo-test/vite": "workspace:*"
+  }
+}

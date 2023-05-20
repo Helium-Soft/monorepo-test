@@ -15,6 +15,7 @@ const libTestConfig = mergeTestConfig(
   defineTestConfig({
     test: {
       coverage: {
+        ...baseTestConfig.test?.coverage,
         reportsDirectory: resolve(process.cwd(), "test", "coverage"),
       },
     },

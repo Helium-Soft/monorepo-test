@@ -1,0 +1,10 @@
+{
+  "extends": "@monorepo-test/typescript/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "%helpers/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "test/**/*.ts", "vite.config.ts"]
+}

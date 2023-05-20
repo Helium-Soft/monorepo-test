@@ -80,6 +80,27 @@ importers:
         specifier: ^0.31.0
         version: 0.31.0(happy-dom@9.18.3)
 
+  libs/helpers:
+    devDependencies:
+      '@monorepo-test/typescript':
+        specifier: workspace:*
+        version: link:../../tools/typescript
+      '@monorepo-test/vite':
+        specifier: workspace:*
+        version: link:../../tools/vite
+
+  packages/lib-1:
+    devDependencies:
+      '@monorepo-test/helpers':
+        specifier: workspace:*
+        version: link:../../libs/helpers
+      '@monorepo-test/typescript':
+        specifier: workspace:*
+        version: link:../../tools/typescript
+      '@monorepo-test/vite':
+        specifier: workspace:*
+        version: link:../../tools/vite
+
   tools/typescript:
     devDependencies:
       '@tsconfig/svelte':
