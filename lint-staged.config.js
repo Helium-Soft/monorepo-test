@@ -2,19 +2,32 @@ import { readdirSync } from "node:fs";
 import micromatch from "micromatch";
 
 /**
- * Find the workspaces corresponding to the given list of files and the
- * given root file name.
+ * Filters the list of files to only return the ones that match the glob patterns.
+ * @param {string[]} files the list of files
+ * @param {string[]} patterns the glob patterns to match
+ * @returns the files matching the glob patterns
+ */
+const getFilePathsForPatterns = (files, patterns) =>
+  micromatch(files, patterns).map((path) => path.replace(process.cwd(), "."));
+
+/**
+ * Find the workspaces corresponding to the given list of files and the given root files options.
  * @param {string[]} files the files from which to search the workspaces
- * @param {string} workspaceRootFile the root file of a workspace to find
+ * @param {string[]} rootFiles.include the files that should be in the workspace root
+ * @param {string[]} rootFiles.exclude the files that should not be in the workspace root
  * @returns the list of workspaces found
  */
-const getWorkspaces = (files, workspaceRootFile) => {
+const getWorkspaces = (files, rootFiles) => {
   let workspaces = [];
+
+  if (!rootFiles.exclude) {
+    rootFiles.exclude = [];
+  }
 
   for (const file of files) {
     const dirs = file.split("/");
 
-    while (dirs.length > 1) {
+    while (dirs.length > 2) {
       dirs.pop();
       const currentPath = dirs.join("/");
 
@@ -22,9 +35,26 @@ const getWorkspaces = (files, workspaceRootFile) => {
         break;
       }
 
-      if (readdirSync(currentPath).includes(workspaceRootFile)) {
-        workspaces = [...workspaces, currentPath];
-        break;
+      const dirFiles = readdirSync(currentPath);
+
+      if (
+        rootFiles.include.every((includedRootFile) =>
+          dirFiles.includes(includedRootFile)
+        )
+      ) {
+        if (rootFiles.exclude.length) {
+          if (
+            rootFiles.exclude.every(
+              (excludedRootFile) => !dirFiles.includes(excludedRootFile)
+            )
+          ) {
+            workspaces = [...workspaces, currentPath];
+            break;
+          }
+        } else {
+          workspaces = [...workspaces, currentPath];
+          break;
+        }
       }
     }
   }
@@ -41,10 +71,12 @@ const getWorkspaces = (files, workspaceRootFile) => {
  * @returns {string[]} the commands to run
  */
 export default (stagedFiles) => {
-  const configFiles = micromatch(stagedFiles, ["**/*.{json,yaml,yml}"]);
-  const jsFiles = micromatch(stagedFiles, ["**/*.{js,cjs,mjs}"]);
-  const tsFiles = micromatch(stagedFiles, ["**/*.ts"]);
-  const svelteFiles = micromatch(stagedFiles, ["**/*.svelte"]);
+  const configFiles = getFilePathsForPatterns(stagedFiles, [
+    "**/*.{json,yaml,yml}",
+  ]);
+  const jsFiles = getFilePathsForPatterns(stagedFiles, ["**/*.{js,cjs,mjs}"]);
+  const tsFiles = getFilePathsForPatterns(stagedFiles, ["**/*.ts"]);
+  const svelteFiles = getFilePathsForPatterns(stagedFiles, ["**/*.svelte"]);
 
   const filesToPrettify = [
     ...configFiles,
@@ -60,10 +92,13 @@ export default (stagedFiles) => {
     commands = [...commands, `prettier --write ${filesToPrettify.join(" ")}`];
   }
 
-  // Run a Svelte check on each project that contains the Svelte files
-  // staged for the current commit
-  if (svelteFiles.length) {
-    const svelteProjects = getWorkspaces(svelteFiles, "svelte.config.js");
+  // Run a Svelte check on each Svelte project that contains changes with the
+  // currently staged files of this commit (a TypeScript check will also be
+  // made in all TS and Svelte files of each Svelte project)
+  if ([...tsFiles, ...svelteFiles].length) {
+    const svelteProjects = getWorkspaces([...tsFiles, ...svelteFiles], {
+      include: ["svelte.config.js"],
+    });
 
     if (svelteProjects.length) {
       commands = [
@@ -77,9 +112,13 @@ export default (stagedFiles) => {
   }
 
   // Run a TypeScript check using the tsc compiler on each project that contains
-  // the TS files staged for the current commit
+  // the TS files staged for the current commit except those located in a Svelte
+  // project (already checked by the `svelte-check` command)
   if (tsFiles.length) {
-    const tsProjects = getWorkspaces(tsFiles, "tsconfig.json");
+    const tsProjects = getWorkspaces(tsFiles, {
+      include: ["tsconfig.json"],
+      exclude: ["svelte.config.js"],
+    });
 
     if (tsProjects.length) {
       commands = [

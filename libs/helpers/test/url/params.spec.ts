@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getPrefixedParams } from "$url/params";
+import { getPrefixedParams } from "%helpers/url/params";
 
 describe.concurrent("[Helpers] URL - Params", () => {
   it("should return the requested params from the url", () => {

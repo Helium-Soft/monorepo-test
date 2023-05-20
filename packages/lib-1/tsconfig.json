@@ -1,0 +1,18 @@
+{
+  "extends": "@monorepo-test/typescript/svelte.tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "%helpers/*": ["../../libs/helpers/src/*"],
+      "$root/*": ["src/*"],
+      "$components/*": ["src/components/*"]
+    }
+  },
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.svelte",
+    "test/**/*.ts",
+    "vite.config.ts"
+  ]
+}

@@ -1,4 +1,4 @@
-import { StringObject } from "$root/types";
+import type { StringObject } from "%helpers/types";
 
 /**
  * Extract all the matching params from a url.

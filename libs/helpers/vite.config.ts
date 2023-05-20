@@ -7,8 +7,7 @@ export default mergeConfig(
   defineConfig({
     resolve: {
       alias: {
-        $root: resolve(__dirname, "src"),
-        $url: resolve(__dirname, "src", "url"),
+        "%helpers": resolve(__dirname, "src"),
       },
     },
   })

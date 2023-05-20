@@ -89,6 +89,18 @@ importers:
         specifier: workspace:*
         version: link:../../tools/vite
 
+  packages/lib-1:
+    devDependencies:
+      '@monorepo-test/helpers':
+        specifier: workspace:*
+        version: link:../../libs/helpers
+      '@monorepo-test/typescript':
+        specifier: workspace:*
+        version: link:../../tools/typescript
+      '@monorepo-test/vite':
+        specifier: workspace:*
+        version: link:../../tools/vite
+
   tools/typescript:
     devDependencies:
       '@tsconfig/svelte':
