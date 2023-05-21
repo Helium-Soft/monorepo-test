@@ -1,6 +1,6 @@
 {
   "name": "@monorepo-test/lib-1",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "My awesome first lib",
   "type": "module",
   "scripts": {
