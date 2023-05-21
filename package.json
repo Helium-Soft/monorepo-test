@@ -9,7 +9,7 @@
     "build": "FORCE_COLOR=1 turbo run build",
     "test": "FORCE_COLOR=1 turbo run test",
     "test:coverage": "FORCE_COLOR=1 turbo run test:coverage",
-    "release": "FORCE_COLOR=1 turbo run release"
+    "ci:publish": "pnpm publish -r --dry-run && pnpm changeset tag"
   },
   "packageManager": "pnpm@8.5.0",
   "devDependencies": {
